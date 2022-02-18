@@ -19,7 +19,7 @@ export default function PlaceItem(props) {
         <h5>{readableDate}</h5>
         <p>{description}</p>
       </div>
-      <Button link={`/places/${id}`}>Show</Button>
+      <Button link={`/places/${id}`}>Read more</Button>
     </PlaceItemWrapper>
   );
 }
@@ -27,7 +27,7 @@ export default function PlaceItem(props) {
 const PlaceItemWrapper = styled.li`
   width: 400px;
   max-width: 450px;
-  margin: 10px;
+  margin: 20px 10px;
 
   p {
     padding: 10px 0;
