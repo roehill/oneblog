@@ -1,14 +1,10 @@
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-import { getPlaceById } from '../../dummy-data';
+import { getPlaceById, getAllPlaces } from '../../helpers/api-utils';
 
-export default function PlacesDetailPage() {
-  const router = useRouter();
-
-  const id = router.query.id;
-  const place = getPlaceById(id);
+export default function PlacesDetailPage(props) {
+  const place = props.place;
 
   if (!place) {
     return <p>No place found! </p>;
@@ -31,6 +27,29 @@ export default function PlacesDetailPage() {
       </div>
     </PlacesDetailPageWrapper>
   );
+}
+
+export async function getStaticProps(context) {
+  const id = context.params.id;
+
+  const place = await getPlaceById(id);
+
+  return {
+    props: {
+      place: place,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const places = await getAllPlaces();
+
+  const paths = places.map((place) => ({ params: { id: place.id } }));
+
+  return {
+    paths: paths,
+    fallback: false,
+  };
 }
 
 const PlacesDetailPageWrapper = styled.div`

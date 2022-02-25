@@ -1,12 +1,8 @@
-import { getAllPlaces } from '../../dummy-data';
-import { useRouter } from 'next/router';
+import { getAllPlaces } from '../../helpers/api-utils';
 import PlacesList from '../../components/places/PlacesList';
 import PlacesSearch from '../../components/places/PlacesSearch';
 
-export default function PlacesPage() {
-  const router = useRouter();
-  const allPlaces = getAllPlaces();
-
+export default function PlacesPage(props) {
   const findPlacesHandler = (year, month) => {
     const fullPath = `/places/${year}/${month}`;
 
@@ -16,7 +12,17 @@ export default function PlacesPage() {
   return (
     <div>
       <PlacesSearch onSearch={findPlacesHandler} />
-      <PlacesList places={allPlaces} />
+      <PlacesList places={props.places} />
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const places = await getAllPlaces();
+
+  return {
+    props: {
+      places: places,
+    },
+  };
 }

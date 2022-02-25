@@ -1,17 +1,25 @@
-import { getFavouritePlaces } from '../dummy-data';
 import styled from 'styled-components';
+import { getFavouritePlaces } from '../helpers/api-utils';
 
 import PlacesList from '../components/places/PlacesList';
 
-export default function HomePage() {
-  const favouritePlaces = getFavouritePlaces();
-
+export default function HomePage(props) {
   return (
     <HomePageWrapper>
       <h1>My Favourite Places</h1>
-      <PlacesList places={favouritePlaces} />
+      <PlacesList places={props.places} />
     </HomePageWrapper>
   );
+}
+
+export async function getStaticProps() {
+  const favouritePlaces = await getFavouritePlaces();
+
+  return {
+    props: {
+      places: favouritePlaces,
+    },
+  };
 }
 
 const HomePageWrapper = styled.div`
