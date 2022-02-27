@@ -19,6 +19,7 @@ export async function getStaticProps() {
     props: {
       places: favouritePlaces,
     },
+    revalidate: 1800,
   };
 }
 

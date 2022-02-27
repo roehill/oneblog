@@ -1,12 +1,23 @@
-import { useRouter } from 'next/router';
-import { getFilteredPlaces } from '../../dummy-data';
-
+// import { useRouter } from 'next/router';
+import { getFilteredPlaces } from '../../helpers/api-utils';
 import PlacesList from '../../components/places/PlacesList';
 
-export default function FilteredPlacesPage() {
-  const router = useRouter();
+export default function FilteredPlacesPage(props) {
+  // const router = useRouter();
 
-  const filteredData = router.query.slug;
+  // const filteredData = router.query.slug;
+
+  return (
+    <div>
+      <PlacesList places={props.places} />
+    </div>
+  );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+
+  const filteredData = params.slug;
 
   const filteredYear = filteredData[0];
   const filteredMonth = filteredData[1];
@@ -18,20 +29,23 @@ export default function FilteredPlacesPage() {
     return <p>Loading...</p>;
   }
 
-  const filteredPlaces = getFilteredPlaces({
+  const filteredPlaces = await getFilteredPlaces({
     year: numYear,
     month: numMonth,
   });
 
-  console.log(filteredPlaces);
-
   if (!filteredPlaces || filteredPlaces.length === 0) {
-    return <p>No places found</p>;
+    return {
+      notFound: true,
+      // redirect: {
+      //   destination: '/error'
+      // }
+    };
   }
 
-  return (
-    <div>
-      <PlacesList places={filteredPlaces} />
-    </div>
-  );
+  return {
+    props: {
+      places: filteredPlaces,
+    },
+  };
 }

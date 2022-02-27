@@ -1,8 +1,11 @@
+import { useRouter } from 'next/router';
 import { getAllPlaces } from '../../helpers/api-utils';
 import PlacesList from '../../components/places/PlacesList';
 import PlacesSearch from '../../components/places/PlacesSearch';
 
 export default function PlacesPage(props) {
+  const router = useRouter();
+
   const findPlacesHandler = (year, month) => {
     const fullPath = `/places/${year}/${month}`;
 
@@ -24,5 +27,6 @@ export async function getStaticProps() {
     props: {
       places: places,
     },
+    revalidate: 1800,
   };
 }
