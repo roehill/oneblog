@@ -6,7 +6,6 @@ const Navbar = (props) => {
 
 const NavbarWrapper = styled.div`
   background-color: red;
-  color: red;
 `;
 
 export default Navbar;

@@ -1,3 +1,7 @@
-export default function Home() {
-  return <div>Home Page</div>;
-}
+import HeroSection from '../components/HeroSection';
+
+const HomePage = (props) => {
+  return <HeroSection />;
+};
+
+export default HomePage;
