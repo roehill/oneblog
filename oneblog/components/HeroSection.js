@@ -5,7 +5,9 @@ const HeroSection = (props) => {
 };
 
 const HeroSectionWrapper = styled.section`
-  background-color: #e1e1e1;
+  background-color: #d3d3d3;
+  height: calc(100vh - 66px);
+  width: 100vw;
 `;
 
 export default HeroSection;
